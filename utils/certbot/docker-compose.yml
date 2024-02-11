@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  certbot:
+    image: certbot/dns-cloudflare:latest
+    volumes:
+      - ./www:/var/www/certbot/:rw
+      - ./conf:/etc/letsencrypt/:rw
+      - ./cloudflare.ini:/.secrets/certbot/cloudflare.ini

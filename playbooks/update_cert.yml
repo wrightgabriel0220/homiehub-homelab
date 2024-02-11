@@ -1,0 +1,21 @@
+# yamllint disable rule:line-length
+- name: Generate wildcard certificate for current domain
+  hosts: localhost
+
+  tasks:
+    - name: Check if certificate for current domain exists already
+      ansible.builtin.stat:
+        path: "../utils/certbot/conf/live/{{ domain }}"
+      register: cert_file_status
+    - name: Generate wildcard certificate for current domain if it doesn't exist already
+      ansible.builtin.command:
+        cmd: "docker compose run --rm certbot certonly --dns-cloudflare --dns-cloudflare-credentials /.secrets/certbot/cloudflare.ini -d *.{{ domain }}"
+        chdir: "../utils/certbot"
+      when: not cert_file_status.stat.exists
+      changed_when: true
+    - name: Renew wildcard certificate for current domain if it does exist already
+      ansible.builtin.command:
+        cmd: "docker compose run --rm certbot renew --dns-cloudflare --dns-cloudflare-credentials /.secrets/certbot/cloudflare.ini --cert-name {{ domain }}"
+        chdir: "../utils/certbot"
+      when: cert_file_status.stat.exists
+      changed_when: false

@@ -1,0 +1,21 @@
+- name: Initialize local environment
+  hosts: localhost
+
+  vars_prompt:
+    - name: domain
+      prompt: "What domain will you be using? If this is a development environment, please use the domain 'localhost' with no apostrophes exactly."
+    - name: cloudflare_api_token
+      prompt: "What is your Cloudflare API token? Make sure the permissions for the token are set correctly according to certbot-dns-cloudflare's requirements."
+
+  tasks:
+    - name: Create a local inventory.yml file if it doesn't already exist
+      ansible.builtin.template:
+        src: "../inventory.yml.j2"
+        dest: "../inventory.yml"
+        mode: "0644"
+
+    - name: Export new initialization flag
+      ansible.builtin.command:
+        cmd: "export INITIALIZED=true"
+        chdir: ".."
+      changed_when: true

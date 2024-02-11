@@ -1,0 +1,78 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name {{ domain }} www.{{ domain }};
+    server_tokens off;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot/;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 default_server ssl;
+    listen [::]:443 ssl;
+    http2 on;
+
+    server_name {{ domain }} www.{{ domain }};
+
+    resolver 127.0.0.11;
+    set $organizr organizr;
+
+    include snippets/ssl.nginx.conf*;
+
+    index  index.php index.html index.htm;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot/;
+    }
+
+    # Custom Org v2 error pages
+    error_page 400 403 404 405 408 500 502 503 504 =200 /?error=$status;
+    error_page 401 =200 /?error=$status&return=$request_uri;
+
+    location / {
+        proxy_pass http://$organizr:80;
+    }
+
+    # Org v2 Server Auth
+    location ~ /auth-([0-9]+) {
+        internal;
+        # Change organizr to the correct container name or to the corresponding IP
+        set $upstream_organizr organizr;
+        proxy_pass http://$upstream_organizr:80/api/?v1/auth&group=$1;
+        proxy_set_header Content-Length "";
+
+        # Do not uncomment the lines below, these are examples for usue in other proxy configs
+        #auth_request /auth-0;   #=Admin
+        #auth_request /auth-1;   #=Co-Admin
+        #auth_request /auth-2;   #=Super User
+        #auth_request /auth-3;   #=Power User
+        #auth_request /auth-4;   #=User
+        #auth_request /auth-998; #=Logged In
+        #auth_request /auth-999; #=Guest
+    }
+
+    # Deny access to all .ht files
+    location ~ /\.ht {
+        deny all;
+    }
+
+    # Deny access to Org Dashboard files
+    location ~ /org.db|organizrLog.json|organizrLoginLog.json {
+        deny all;
+    }
+
+    location /garden {
+    	return 301 https://publish.obsidian.md/hb-homelab;
+    }
+
+    # location /api/v2 {
+    #     try_files $uri /api/v2/index.php$is_args$args;
+    # }
+}

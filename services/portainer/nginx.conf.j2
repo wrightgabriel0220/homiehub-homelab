@@ -1,0 +1,31 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name portainer.{{ domain }};
+
+    location / {
+        return 301 https://portainer.{{ domain }}$request_uri;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot/;
+    }
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+
+    set $portainer portainer;
+    resolver 127.0.0.11;
+
+    server_name portainer.{{ domain }};
+
+    include snippets/ssl.nginx.conf*;
+
+    location / {
+        proxy_pass  https://$portainer:9443;
+    }
+}

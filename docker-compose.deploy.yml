@@ -1,0 +1,9 @@
+services:
+  ddclient:
+    image: lscr.io/linuxserver/ddclient:latest
+    container_name: ddclient_ddns
+    environment:
+      - TZ_US/Pacific
+    volumes:
+      - ./utils/ddclient/conf:/config
+    restart: unless-stopped

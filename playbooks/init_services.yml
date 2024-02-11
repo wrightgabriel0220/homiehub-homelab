@@ -1,0 +1,18 @@
+- name: Initialize individual NGINX service config
+  hosts: localhost
+
+  tasks:
+    - name: Discover and capture list of services
+      ansible.builtin.find:
+        paths:
+          - "../services"
+        file_type: "directory"
+        excludes:
+          - "nginx"
+      register: services
+    - name: Generate target nginx.conf from host variables for all services
+      ansible.builtin.template:
+        src: "../services/{{ item.path | basename }}/nginx.conf.j2"
+        dest: "../services/nginx/conf/generated/{{ item.path | basename }}.conf"
+        mode: "0644"
+      loop: "{{ services.files }}"

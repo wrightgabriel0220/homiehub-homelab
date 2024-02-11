@@ -1,0 +1,49 @@
+- name: Initialize local deployment
+  hosts: localhost
+
+  tasks:
+    - name: Discover and capture list of nginx snippets
+      ansible.builtin.find:
+        paths:
+          - "../utils/nginx_snippets"
+        file_type: "file"
+        patterns:
+          - "*.nginx.conf.j2"
+      register: nginx_snippets
+
+    - name: Generate nginx snippets
+      ansible.builtin.template:
+        src: "../utils/nginx_snippets/{{ item.path | basename }}"
+        dest: "../utils/nginx_snippets/generated/{{ item.path | basename | replace('.j2', '') }}"
+        mode: "0644"
+      loop: "{{ nginx_snippets.files }}"
+
+    - name: Generate ddclient.conf
+      ansible.builtin.template:
+        src: "../utils/ddclient/conf/ddclient.conf.j2"
+        dest: "../utils/ddclient/conf/ddclient.conf"
+        mode: "0644"
+
+    - name: Generate cloudflare.ini
+      ansible.builtin.template:
+        src: "../utils/certbot/cloudflare.ini.j2"
+        dest: "../utils/certbot/cloudflare.ini"
+        mode: "0644"
+
+    - name: Create docker auth network
+      community.docker.docker_network:
+        name: auth
+
+    - name: Setup regular backup cronjob
+      ansible.builtin.cron:
+        name: "Weekly Backups"
+        special_time: "weekly"
+        job: "/Users/gabe/hb-homelab/backup.sh"
+
+    - name: Start both core server and deployment utilities
+      community.docker.docker_compose_v2:
+        project_name: "homiehub_homelab"
+        project_src: "${PWD}/../"
+        files:
+          - "docker-compose.core.yml"
+          - "docker-compose.deploy.yml"

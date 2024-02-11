@@ -1,0 +1,125 @@
+services:
+  nginx:
+    image: nginx:latest
+    restart: always
+    container_name: nginx_reverse_proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./services/nginx/conf/generated:/etc/nginx/conf.d
+      - ./utils/nginx_snippets/generated/:/etc/nginx/snippets
+      - ./utils/certbot/conf/:/etc/letsencrypt
+      - ./utils/certbot/www/:/var/www/certbot/
+    depends_on:
+      - jellyfin
+    networks:
+      - main
+      - auth
+  jellyfin:
+    image: jellyfin/jellyfin
+    restart: "unless-stopped"
+    container_name: jf_media_server
+    expose:
+      - "8096"
+      - "1900"
+      - "7359"
+      - "8920"
+    volumes:
+      - ./services/jellyfin/config:/config:rw
+      - ./services/jellyfin/cache:/cache:rw
+      - ./data/media/:/media:rw
+    networks:
+      - main
+  jellyseerr:
+    image: fallenbagel/jellyseerr
+    restart: "unless-stopped"
+    container_name: jellyseerr_req_man
+    expose:
+      - "5055"
+    volumes:
+      - ./services/jellyseerr/config:/app/config
+    networks:
+      - main
+    depends_on:
+      - jellyfin
+      - radarr
+      - sonarr
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    volumes:
+      - ./services/starr/radarr/config:/config
+      - ./data/media/movies:/data/media/movies
+    expose:
+      - "7878"
+    restart: unless-stopped
+    networks:
+      - main
+    depends_on:
+      - prowlarr
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    volumes:
+      - ./services/starr/sonarr/config:/config
+      - ./data/media/tv:/data/media/tv
+    expose:
+      - "8989"
+    restart: unless-stopped
+    networks:
+      - main
+    depends_on:
+      - prowlarr
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    volumes:
+      - ./services/starr/prowlarr/config:/config
+    expose:
+      - "9696"
+    restart: unless-stopped
+    networks:
+      - main
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - WEBUI_PORT=8080
+    volumes:
+      - ./services/qbittorrent/config:/config
+      - ./data/torrents:/downloads
+    expose:
+      - "8080"
+      - "6881"
+      - "6881/udp"
+    restart: unless-stopped
+    networks:
+      - main
+  organizr:
+    image: organizr/organizr:latest
+    container_name: organizr_dash
+    volumes:
+      - ./services/organizr/config:/config
+    expose:
+      - "80"
+    restart: unless-stopped
+    networks:
+      - main
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: always
+    container_name: portainer-docker-ui-server
+    expose:
+      - "9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./services/portainer/data:/data
+    networks:
+      - main
+
+networks:
+  main:
+  auth:
+    name: auth
+    external: true

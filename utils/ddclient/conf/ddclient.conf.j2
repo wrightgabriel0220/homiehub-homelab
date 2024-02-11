@@ -1,0 +1,11 @@
+daemon=300
+use=web 
+web='https://cloudflare.com/cdn-cgi/trace'
+web-skip='ip='
+
+protocol=cloudflare, \
+zone={{ domain }}, \
+ttl=1, \
+login=token, \
+password={{ cloudflare_api_token }}
+*.{{ domain }}
