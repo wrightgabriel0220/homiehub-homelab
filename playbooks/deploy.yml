@@ -38,7 +38,7 @@
       ansible.builtin.cron:
         name: "Weekly Backups"
         special_time: "weekly"
-        job: "/Users/gabe/hb-homelab/backup.sh"
+        job: "/Users/gabe/homiehub-homelab/backup.sh"
 
     - name: Start both core server and deployment utilities
       community.docker.docker_compose_v2:
