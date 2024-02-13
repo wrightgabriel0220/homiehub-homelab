@@ -13,9 +13,3 @@
         src: "../inventory.yml.j2"
         dest: "../inventory.yml"
         mode: "0644"
-
-    - name: Export new initialization flag
-      ansible.builtin.command:
-        cmd: "export INITIALIZED=true"
-        chdir: ".."
-      changed_when: true
