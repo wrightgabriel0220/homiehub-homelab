@@ -17,7 +17,6 @@ rsync -a services/ backup_temp/$backup_title
 if [[ $? = 0 ]]; then
     echo "Compressing core backup file"
     #* Backup_temp folder helps prevent dev from fucking this process up while it's running
-    #* Syncdir intermediary is because rsync works at dir-level, not file-level
     zip -rm backup_temp/$backup_title.zip backup_temp/$backup_title
     if [[ $? = 0 ]]; then
 
