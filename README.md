@@ -42,4 +42,4 @@ TODO: EXPLAIN HERE HOW TO DEPLOY AT A DIFFERENT DOMAIN, DIFFERENT HOST, ETC...
 ## [Services](https://publish.obsidian.md/hb-homelab/Admin/Services)
 
 ## License
-[The Unlicense](https://github.com/wrightgabriel0220/hb-homelab/UNLICENSE.txt)
+[The Unlicense](https://github.com/wrightgabriel0220/homiehub-homelab/UNLICENSE.txt)
