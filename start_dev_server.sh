@@ -5,4 +5,4 @@ if ! [ -f inventory.yml ]; then
 fi
 
 # Run the core app
-docker compose -f ./docker-compose.core.yml up -d
+ansible-playbook playbooks/start_dev.yml -i inventory.yml
