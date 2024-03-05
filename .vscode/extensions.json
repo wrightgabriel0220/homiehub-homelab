@@ -10,7 +10,8 @@
 		"redhat.ansible",
 		"redhat.vscode-yaml",
 		"yzhang.markdown-all-in-one",
-		"ms-vscode-remote.remote-wsl"
+		"ms-vscode-remote.remote-wsl",
+		"ms-vscode-remote.remote-containers"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [
