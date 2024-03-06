@@ -4,21 +4,9 @@ server {
 
     server_name media.{{ domain }};
 
-    location / {
-        return 301 https://media.{{ domain }}$request_uri;
-    }
-
     location /.well-known/acme-challenge/ {
         root /var/www/certbot/;
     }
-}
-
-server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
-
-    server_name media.{{ domain }};
 
     set $radarr radarr;
     set $sonarr sonarr;

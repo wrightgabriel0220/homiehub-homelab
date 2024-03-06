@@ -4,22 +4,6 @@ server {
 
     server_name downloads.{{ domain }};
 
-    location / {
-        return 301 https://downloads.{{ domain }}$request_uri;
-    }
-
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot/;
-    }
-}
-
-server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
-
-    server_name downloads.{{ domain }};
-
     set $qbittorrent qbittorrent;
     resolver 127.0.0.11;
 
@@ -49,5 +33,9 @@ server {
         # Note: If this flag is set while the external website uses only HTTP, this will cause
         # the login mechanism to not work without any apparent errors in console/network resulting in "auth loops".
         proxy_cookie_path  /                  "/; Secure";
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot/;
     }
 }
