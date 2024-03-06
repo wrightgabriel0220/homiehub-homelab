@@ -4,30 +4,10 @@ server {
 
     server_name auth.{{ domain }};
 
-    location / {
-        return 301 https://auth.{{ domain }}$request_uri;
-    }
-
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot/;
-    }
-}
-
-server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
-
-    server_name auth.{{ domain }};
-
     set $authentik authentik_server;
     resolver 127.0.0.11;
 
     include snippets/ssl.nginx.conf*;
-
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot/;
-    }
 
     location / {
         proxy_pass http://$authentik:9000;
@@ -63,6 +43,10 @@ server {
         # proxy_set_header X-authentik-email $authentik_email;
         # proxy_set_header X-authentik-name $authentik_name;
         # proxy_set_header X-authentik-uid $authentik_uid;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot/;
     }
 
     # Special location for when the /auth endpoint returns a 401,
