@@ -117,7 +117,30 @@ services:
       - ./services/portainer/data:/data
     networks:
       - main
+  nextcloud:
+    image: nextcloud/all-in-one:latest
+    init: true
+    restart: always
+    container_name: nextcloud-aio-mastercontainer
+    ports:
+      - 8080:8080
+    environment: {
+      "APACHE_PORT": 11000,
+      "APACHE_IP_BINDING": 0.0.0.0,
+      "SKIP_DOMAIN_VALIDATION": true,
+      "NEXTCLOUD_DATADIR": "/Users/gabe/homiehub-homelab/data/drive",
+      "NEXTCLOUD_MOUNT": "/Users/gabe/homiehub-homelab/data",
+    }
+    volumes:
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - /var/run/docker.sock.raw:/var/run/docker.sock:ro
+    networks:
+      - main
 
+
+volumes:
+  nextcloud_aio_mastercontainer:
+    name: nextcloud_aio_mastercontainer
 networks:
   main:
   auth:
