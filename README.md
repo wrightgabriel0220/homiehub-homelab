@@ -1,5 +1,6 @@
 # Homiehub Homelab
-TODO: LOOK INTO ADDING BADGES HERE
+![GitHub License](https://img.shields.io/github/license/wrightgabriel0220/homiehub-homelab)
+
 ## What is the Homiehub Homelab?
 The Homiehub Homelab is a personal project of mine I took on to learn some new skills and hopefully provide myself and my friends with
 some really cool free, open-source services that we can control democratically and use to share knowledge, resources, and communicate. The selection
