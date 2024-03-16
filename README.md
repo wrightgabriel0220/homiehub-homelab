@@ -1,5 +1,6 @@
 # Homiehub Homelab
-TODO: LOOK INTO ADDING BADGES HERE
+![GitHub License](https://img.shields.io/github/license/wrightgabriel0220/homiehub-homelab)
+
 ## What is the Homiehub Homelab?
 The Homiehub Homelab is a personal project of mine I took on to learn some new skills and hopefully provide myself and my friends with
 some really cool free, open-source services that we can control democratically and use to share knowledge, resources, and communicate. The selection
@@ -10,7 +11,7 @@ around at the code!
 ## Features
 - Jellyfin Media Server
     * Movies, TV Shows, and Music
-    * Media Requests
+    * Media Requests (Movies and TV Shows)
     * Automated Media Request Downloads
     * Feature-Rich Library Management
 - Obsidian.md Digital Garden
@@ -20,6 +21,11 @@ around at the code!
     * Weather Display
     * Quick and Easy IFrame Navigation w/ Compatible Services
 - Portainer.io Container Management Server
+- Nextcloud AIO Suite
+    * Personal Dashboard
+    * Nextcloud App Integrations
+    * Cloud Storage
+    * Jellyfin Media Server Music Uploads
 - nginx Reverse Proxy
     * SSL Wildcard Certification
 - ddclient DDNS
@@ -35,7 +41,10 @@ services and lose things like user data, media, etc...
 
 ## Self-Hosting for Personal Deployment
 ### Prerequisites
-TODO: EXPLAIN HERE HOW TO DEPLOY AT A DIFFERENT DOMAIN, DIFFERENT HOST, ETC...
+- A domain hosted on Cloudflare
+- At least 6gb of RAM
+
+Follow the official deployment guide, but when prompted for a domain and Cloudflare API token, enter your personal Cloudflare domain and token.
 
 ## [Official Deployment](https://publish.obsidian.md/hb-homelab/Admin/Guides/Deployment)
 
