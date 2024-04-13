@@ -11,3 +11,8 @@ requests = "*"
 
 [requires]
 python_version = "3.12"
+
+[scripts]
+start_dev_server = "./scripts/start_dev_server.sh"
+deploy = "./scripts/deploy.sh"
+update_cert = "./scripts/update_cert.sh"
