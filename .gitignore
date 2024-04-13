@@ -22,6 +22,8 @@ services/authentik/certs
 services/authentik/custom-templates
 services/authentik/media
 
+.venv
+
 inventory.yml
 vault/secrets.yml
 
