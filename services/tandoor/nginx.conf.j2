@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name recipes.{{ domain }};
+
+    set $tandoor tandoor_webserver;
+    resolver 127.0.0.11;
+
+    include snippets/ssl.nginx.conf*;
+
+    location / {
+        proxy_set_header Host $http_host; # try $host instead if this doesn't work
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://$tandoor:8080;
+    }
+}
