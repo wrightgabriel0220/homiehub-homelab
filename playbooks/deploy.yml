@@ -43,4 +43,3 @@
         files:
           - "docker-compose.core.yml"
           - "docker-compose.deploy.yml"
-          - "services/tandoor/docker-compose.yml"
