@@ -10,6 +10,11 @@
         excludes:
           - "nginx"
       register: services
+    - name: Generate env file for Tandoor 
+      ansible.builtin.template:
+        src: "../services/tandoor/.env.j2"
+        dest: "../services/tandoor/.env"
+        mode: "0644"
     - name: Generate target nginx.conf from host variables for all services
       ansible.builtin.template:
         src: "../services/{{ item.path | basename }}/nginx.conf.j2"

@@ -17,10 +17,10 @@ services/starr/radarr
 services/starr/sonarr
 services/qbittorrent/config
 services/portainer/data
-services/authentik/.env
-services/authentik/certs
-services/authentik/custom-templates
-services/authentik/media
+services/tandoor/.env
+services/tandoor/mediafiles
+services/tandoor/staticfiles
+services/tandoor/postgresql
 
 .venv
 
