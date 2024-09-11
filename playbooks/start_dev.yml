@@ -2,9 +2,6 @@
   hosts: localhost
 
   tasks:
-    - name: Create docker auth network
-      community.docker.docker_network:
-        name: auth
     - name: Start up dev app
       community.docker.docker_compose_v2:
         project_src: "${PWD}/../"

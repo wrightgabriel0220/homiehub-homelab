@@ -8,14 +8,17 @@ services:
       - "443:443"
     volumes:
       - ./services/nginx/conf/generated:/etc/nginx/conf.d
+      - ./services/nginx/mediafiles:/static:ro
+      - ./services/nginx/staticfiles:/static:ro
       - ./utils/nginx_snippets/generated/:/etc/nginx/snippets
       - ./utils/certbot/conf/:/etc/letsencrypt
       - ./utils/certbot/www/:/var/www/certbot/
+    env_file:
+      - ./services/tandoor/.env
     depends_on:
       - jellyfin
     networks:
       - main
-      - auth
   jellyfin:
     image: jellyfin/jellyfin
     restart: "unless-stopped"
@@ -147,12 +150,34 @@ services:
       EULA: "TRUE"
     volumes:
       - ./services/rainmire/data:/data
+  tandoor_db:
+    restart: always
+    image: postgres:16-alpine
+    container_name: tandoor_recipes_postgres_db
+    volumes:
+      - ./services/tandoor/postgresql:/var/lib/postgresql/data
+    env_file:
+      - ./services/tandoor/.env
+    networks:
+      - main
+  tandoor_webserver:
+    restart: always
+    image: vabene1111/recipes
+    container_name: tandoor_recipes_webserver
+    expose:
+      - "8080"
+    env_file:
+      - ./services/tandoor/.env
+    volumes:
+      - ./services/tandoor/staticfiles:/opt/recipes/staticfiles
+      - ./services/tandoor/mediafiles:/opt/recipes/mediafiles
+    depends_on:
+      - tandoor_db
+    networks:
+      - main
 
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer
 networks:
   main:
-  auth:
-    name: auth
-    external: true

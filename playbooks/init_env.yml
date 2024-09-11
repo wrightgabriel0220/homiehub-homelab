@@ -10,6 +10,10 @@
     - name: python_interpreter_path
       prompt: "What is the absolute path to your Python interpreter? If unsure, run 'which python' from inside your virtual environment and copy the result here."
       private: no
+    - name: tandoor_db_password
+      prompt: "What password would you like to use for the Postgres DB supporting your Tandoor instance?"
+    - name: tandoor_db_secret_key
+      prompt: "What secret key would you like to use for your Tandoor instance?"
 
   tasks:
     - name: Create a local inventory.yml file if it doesn't already exist

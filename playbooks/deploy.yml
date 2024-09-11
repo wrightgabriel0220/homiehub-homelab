@@ -30,10 +30,6 @@
         dest: "../utils/certbot/cloudflare.ini"
         mode: "0644"
 
-    - name: Create docker auth network
-      community.docker.docker_network:
-        name: auth
-
     - name: Setup regular backup cronjob
       ansible.builtin.cron:
         name: "Weekly Backups"
