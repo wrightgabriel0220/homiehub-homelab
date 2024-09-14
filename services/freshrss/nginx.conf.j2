@@ -1,0 +1,19 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name rss.{{ domain }};
+
+    set $freshrss freshrss;
+    resolver 127.0.0.11;
+
+    include snippets/ssl.nginx.conf*;
+
+    location / {
+        proxy_pass         http://$freshrss:80;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot/;
+    }
+}
