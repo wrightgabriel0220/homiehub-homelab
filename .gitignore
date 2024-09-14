@@ -21,6 +21,7 @@ services/tandoor/.env
 services/tandoor/mediafiles
 services/tandoor/staticfiles
 services/tandoor/postgresql
+services/freshrss/config
 
 .venv
 

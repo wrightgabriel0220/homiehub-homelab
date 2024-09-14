@@ -175,6 +175,16 @@ services:
       - tandoor_db
     networks:
       - main
+  freshrss_aggregator:
+    restart: unless-stopped
+    image: lscr.io/linuxserver/freshrss:latest
+    container_name: freshrss
+    volumes:
+      - ./services/freshrss/config:/config
+    expose:
+      - "80"
+    networks:
+      - main
 
 volumes:
   nextcloud_aio_mastercontainer:
