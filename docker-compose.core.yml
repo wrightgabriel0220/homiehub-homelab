@@ -133,7 +133,7 @@ services:
         "APACHE_IP_BINDING": 0.0.0.0,
         "SKIP_DOMAIN_VALIDATION": true,
         "NEXTCLOUD_DATADIR": "/Users/gabe/homiehub-homelab/data/drive",
-        "NEXTCLOUD_MOUNT": "/mnt/",
+        "NEXTCLOUD_MOUNT": "/Users/gabe/homiehub-homelab/data",
       }
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
