@@ -13,6 +13,12 @@
         chdir: "../utils/certbot"
       when: not cert_file_status.stat.exists
       changed_when: true
+    - name: Generate wildcard certificate for personal website if it doesn't exist already
+      ansible.builtin.command:
+        cmd: "docker compose run --rm certbot certonly --dns-cloudflare --dns-cloudflare-credentials /.secrets/certbot/cloudflare.ini -d *.wrightlyons.com"
+        chdir: "../utils/certbot"
+      when: not cert_file_status.stat.exists
+      changed_when: true
     - name: Renew wildcard certificate for current domain if it does exist already
       ansible.builtin.command:
         cmd: "docker compose run --rm certbot renew --dns-cloudflare --dns-cloudflare-credentials /.secrets/certbot/cloudflare.ini --cert-name {{ domain }}"
