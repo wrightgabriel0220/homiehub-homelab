@@ -8,6 +8,7 @@ services:
       - "443:443"
     volumes:
       - ./services/nginx/conf/generated:/etc/nginx/conf.d
+      - ./services/nginx/conf/gateway.conf:/etc/nginx/conf.d/gateway.conf
       - ./services/nginx/mediafiles:/static:ro
       - ./services/nginx/staticfiles:/static:ro
       - ./utils/nginx_snippets/generated/:/etc/nginx/snippets
@@ -18,6 +19,7 @@ services:
     depends_on:
       - jellyfin
     networks:
+      - gateway
       - main
   jellyfin:
     image: jellyfin/jellyfin
@@ -191,3 +193,5 @@ volumes:
     name: nextcloud_aio_mastercontainer
 networks:
   main:
+  gateway:
+    external: true
