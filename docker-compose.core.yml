@@ -16,8 +16,6 @@ services:
       - ./utils/certbot/www/:/var/www/certbot/
     env_file:
       - ./services/tandoor/.env
-    depends_on:
-      - jellyfin
     networks:
       - gateway
       - main
@@ -32,7 +30,6 @@ services:
     networks:
       - main
     depends_on:
-      - jellyfin
       - radarr
       - sonarr
   radarr:
