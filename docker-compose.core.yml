@@ -139,20 +139,9 @@ services:
       }
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - ./data/backups/nextcloud:/backups/nextcloud
       - /var/run/docker.sock.raw:/var/run/docker.sock:ro
     networks:
       - main
-  rainmire_map_server:
-    image: itzg/minecraft-server
-    tty: true
-    stdin_open: true
-    ports:
-      - "25565:25565"
-    environment:
-      EULA: "TRUE"
-    volumes:
-      - ./services/rainmire/data:/data
   tandoor_db:
     restart: always
     image: postgres:16-alpine
