@@ -21,21 +21,6 @@ services:
     networks:
       - gateway
       - main
-  jellyfin:
-    image: jellyfin/jellyfin
-    restart: "unless-stopped"
-    container_name: jf_media_server
-    expose:
-      - "8096"
-      - "1900"
-      - "7359"
-      - "8920"
-    volumes:
-      - ./services/jellyfin/config:/config:rw
-      - ./services/jellyfin/cache:/cache:rw
-      - ./data/media/:/media:rw
-    networks:
-      - main
   jellyseerr:
     image: fallenbagel/jellyseerr
     restart: "unless-stopped"
