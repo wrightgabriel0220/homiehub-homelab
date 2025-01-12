@@ -29,9 +29,6 @@ services:
       - ./services/jellyseerr/config:/app/config
     networks:
       - main
-    depends_on:
-      - radarr
-      - sonarr
   organizr:
     image: organizr/organizr:latest
     container_name: organizr_dash
