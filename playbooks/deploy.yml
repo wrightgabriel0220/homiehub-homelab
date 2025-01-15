@@ -36,6 +36,10 @@
         special_time: "weekly"
         job: "/Users/gabe/homiehub-homelab/backup.sh"
 
+    - name: Start up leantime instance
+      community.docker.docker_compose_v2:
+        project_src: "${PWD}/../services/leantime"
+
     - name: Start both core server and deployment utilities
       community.docker.docker_compose_v2:
         project_name: "homiehub_homelab"
