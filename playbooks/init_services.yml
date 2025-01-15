@@ -10,10 +10,15 @@
         excludes:
           - "nginx"
       register: services
-    - name: Generate env file for Tandoor 
+    - name: Generate env file for Tandoor
       ansible.builtin.template:
         src: "../services/tandoor/.env.j2"
         dest: "../services/tandoor/.env"
+        mode: "0644"
+    - name: Generate env file for Leantime
+      ansible.builtin.template:
+        src: "../services/leantime/.env.j2"
+        dest: "../services/leantime/.env"
         mode: "0644"
     - name: Generate target nginx.conf from host variables for all services
       ansible.builtin.template:

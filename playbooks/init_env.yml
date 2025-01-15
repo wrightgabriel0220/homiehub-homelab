@@ -14,6 +14,12 @@
       prompt: "What password would you like to use for the Postgres DB supporting your Tandoor instance?"
     - name: tandoor_db_secret_key
       prompt: "What secret key would you like to use for your Tandoor instance?"
+    - name: leantime_db_password
+      prompt: "What password would you like to use for the MySQL DB supporting your Leantime instance?"
+    - name: leantime_admin_password
+      prompt: "What password would you like to use for the admin user to login to your Leantime instance?"
+    - name: leantime_session_password
+      prompt: "Please generate a secure password of at least 30 characters which your Leantime instance will use to securely salt user passwords upon storage."
 
   tasks:
     - name: Create a local inventory.yml file if it doesn't already exist
