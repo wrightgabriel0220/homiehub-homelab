@@ -23,11 +23,13 @@ services:
     image: bonukai/mediatracker:latest
     restart: "unless-stopped"
     container_name: mediatracker
-    ports:
-      - 7481:7481
+    expose:
+      - 7481
     volumes:
       - ./services/mediatracker/data:/storage
       - mediatracker_assets:/assets
+    networks:
+      - main
   jellyseerr:
     image: fallenbagel/jellyseerr
     restart: "unless-stopped"

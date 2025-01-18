@@ -1,0 +1,15 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name mediatracker.{{ domain }};
+
+    include snippets/ssl.nginx.conf*;
+
+    set $mediatracker mediatracker;
+    resolver 127.0.0.11;
+
+    location / {
+        proxy_pass http://mediatracker:7481;
+    }
+}
