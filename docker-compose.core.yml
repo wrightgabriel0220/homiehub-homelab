@@ -19,6 +19,15 @@ services:
     networks:
       - gateway
       - main
+  mediatracker:
+    image: bonukai/mediatracker:latest
+    restart: "unless-stopped"
+    container_name: mediatracker
+    ports:
+      - 7481:7481
+    volumes:
+      - ./services/mediatracker/data:/storage
+      - mediatracker_assets:/assets
   jellyseerr:
     image: fallenbagel/jellyseerr
     restart: "unless-stopped"
@@ -109,6 +118,8 @@ services:
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer
+  mediatracker_assets:
+    name: mediatracker_assets
 networks:
   main:
   gateway:
