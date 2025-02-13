@@ -116,6 +116,18 @@ services:
       - "80"
     networks:
       - main
+  gotify_notification_server:
+    restart: unless-stopped
+    image: gotify/server
+    container_name: gotify
+    volumes:
+      - ./services/gotify/data:/app/data
+    expose:
+      - 80
+    networks:
+      - main
+    environment:
+      GOTIFY_DEFAULTUSER_PASS: "admin"
 
 volumes:
   nextcloud_aio_mastercontainer:
